@@ -10,26 +10,23 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	= ft_printf.c ft_printf_utils.c
-OBJS	= $(SRCS:.c=.o)
+NAME = libftprintf.a
+FLAG = -Wall -Wextra -Werror
+SRC = $(shell find . -name "ft_*.c")
 
-NAME	= libftprintf.a
-CC		= gcc
-RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror
+all: $(NAME)
 
+$(NAME):
+	@gcc $(FLAG) -c $(SRC)
+	@ar rc $(NAME) *.o
+	@echo "\n\033[92m $@ built ☑️\033[0m\n"
+clean:
+	@rm -f  *.o
+	@echo "\n\033[36m object files removed 👋\033[0m\n"
+fclean: clean
+	@rm -f $(NAME)
+	@echo "\n\033[36m executables removed 👋\033[0m\n"
 
-all :  ${NAME}
-
-$(NAME) : ${OBJS}
-	ar rc $(NAME) $(OBJS)
-
-clean :
-	${RM} ${OBJS}
-
-fclean : clean
-	${RM} ${NAME}
-
-re : fclean all
+re: fclean all
 
 .PHONY : all clean fclean re
